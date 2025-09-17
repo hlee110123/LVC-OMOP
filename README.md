@@ -12,8 +12,8 @@ This includes SQL scripts to create two cohorts: `PVI_EarlyPVI (ID#664)` and `Lo
     - `@target_database_schema`
 
 2. **Set Cohort IDs**:
-    - Use `@target_cohort_id = 664` for `PVI_EarlyPVI` (or choose any ID you prefer)
-    - Use `@target_cohort_id = 665` for `LowValuePVI_EarlyPVI_cohort` (or choose any ID you prefer).
+    - Use `@target_cohort_id = 664` for `PVI_Early PVI` (or choose any ID you prefer)
+    - Use `@target_cohort_id = 665` for `PVI_Non EarlyPVI` (or choose any ID you prefer).
 
 3. **Run the SQL Scripts**: Execute the SQL queries to create the cohorts.
 
