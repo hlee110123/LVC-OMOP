@@ -21,7 +21,7 @@ This includes SQL scripts to create two cohorts: `PVI_EarlyPVI (ID#664)` and `Lo
 
 ### Option B: If you HAVE ATLAS
 
-1. Use ATLAS to create the cohorts and note the cohort definition IDs generated.
+1. Use ATLAS to create the cohorts and note the cohort definition IDs generated. (Use json.txt)
 
 ---
 
