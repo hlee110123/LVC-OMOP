@@ -2,7 +2,7 @@
 
 ## Overview
 
-This includes SQL scripts to create two cohorts: `PVI_EarlyPVI (ID#664)` and `LowValuePVI_EarlyPVI_cohort (ID#665)`.
+SQL and R scripts for comparing early vs non-early PVI patients and generating statistical analysis tables
 
 ## Step 1: Create Cohorts
 
