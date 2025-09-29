@@ -192,7 +192,7 @@ LEFT JOIN amputation_events amp ON cp.person_id = amp.person_id
 nrow(all_patients_df)
 
 #--------------------- Part III: Analysis ---------------------
-# Filter all_patients_df to include only person_ids from filtered_data
+# Filter all_patients_df to include only person_ids from filtered_data (Table 1: LVC_Table1_092925.R file)
 all_patients_outcomes <- all_patients_df[all_patients_df$person_id %in% filtered_data$person_id, ]
 
 # Prepare the data with proper labels
@@ -229,3 +229,4 @@ print(table2_df)
 
 # Save as CSV
 mycsv(table2_df, file = "LVC_Table2.csv")
+
