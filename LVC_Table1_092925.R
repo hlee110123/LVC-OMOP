@@ -24,7 +24,7 @@ comor_earlypvi <- dbGetQuery(conn, "SELECT
                                                                377821,376065,43530690,4226354,4223303,4222876,4214376,37016348,37016349,4226238,201530,4032787,4029423,45769876,45757363,4226798,4228112,36714116,4095288,4224254,4228443,4191611,4143857,4140466,
                                                                45770830,380097,378743,37016179,45757435,377552,37016180,45770881,4225055,4222415,4114427,45769830,43531563,4044391,45763583,43530656,134398,4131908,318712,443729,321822,376112,37017431,37017432,
                                                                380096,45763584,43530685,200687,443731,4174977,4227210,376114,4290822,4266637,4227657,4338901,45769873,45773064,4338896,201254,4152858,4099214,443412,201826,4099651,4193704,45770902) 
-                               AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+                               AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date 
                                THEN 1 
                                ELSE 0 
                                END
@@ -32,7 +32,7 @@ comor_earlypvi <- dbGetQuery(conn, "SELECT
                              MAX(
                                CASE 
                                WHEN a.condition_concept_id IN (44782429,320128,4110948,44784621,439696,319034,444101,443919,443771,317895,319826) 
-                               AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+                               AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date 
                                THEN 1 ELSE 0 
                                END
                              ) AS hypertension,
@@ -40,10 +40,10 @@ comor_earlypvi <- dbGetQuery(conn, "SELECT
                                CASE 
                                WHEN (
                                  (o.observation_concept_id IN (4005823, 4276526, 4218741) 
-                                  AND o.observation_date < b.cohort_start_date - INTERVAL 365 DAY)
+                                  AND o.observation_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
                                  OR
                                  (a.condition_concept_id IN (4103418, 4146763, 4233811, 4209423 ) 
-                                   AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY)
+                                   AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
                                ) THEN 1 ELSE 0 
                                END
                              ) AS smoking,
@@ -52,38 +52,38 @@ comor_earlypvi <- dbGetQuery(conn, "SELECT
                                WHEN (
                                  (a.condition_concept_id IN (46271022, 44782429, 43531578, 443597, 45763854, 45763855, 
                                                              443612, 443611, 4019967, 193782, 443919, 192359, 201826) 
-                                  AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY)
+                                  AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
                                  OR
                                  (o.observation_concept_id = 4019967 
-                                   AND o.observation_date < b.cohort_start_date - INTERVAL 365 DAY)
+                                   AND o.observation_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
                                ) THEN 1 ELSE 0 
                                END
                              ) AS eskd,
                              MAX(
                                CASE 
                                WHEN a.condition_concept_id IN (256451, 255841, 255841, 261325, 255573, 256449)
-                               AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+                               AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
                                THEN 1 ELSE 0 
                                END
                              ) AS copd,
                              MAX(
                                CASE 
                                WHEN a.condition_concept_id IN (443614, 443601, 443597, 45763854, 45763855, 443612, 443611, 443611, 44782429, 201826, 43531578, 4140207)
-                               AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+                               AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
                                THEN 1 ELSE 0 
                                END
                              ) AS chronic_kidney_disease,
                              MAX(
                                CASE 
                                WHEN a.condition_concept_id IN (321318, 312327, 4108217, 4176969, 315286)
-                               AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+                               AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
                                THEN 1 ELSE 0 
                                END
                              ) AS ischemic_heart_disease,
                              MAX(
                                CASE 
                                WHEN a.condition_concept_id IN (316139)
-                               AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+                               AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
                                THEN 1 ELSE 0 
                                END
                              ) AS congestive_heart_failure
@@ -113,7 +113,7 @@ comor_nonearlypvi <- dbGetQuery(conn, "SELECT
             377821,376065,43530690,4226354,4223303,4222876,4214376,37016348,37016349,4226238,201530,4032787,4029423,45769876,45757363,4226798,4228112,36714116,4095288,4224254,4228443,4191611,4143857,4140466,
             45770830,380097,378743,37016179,45757435,377552,37016180,45770881,4225055,4222415,4114427,45769830,43531563,4044391,45763583,43530656,134398,4131908,318712,443729,321822,376112,37017431,37017432,
             380096,45763584,43530685,200687,443731,4174977,4227210,376114,4290822,4266637,4227657,4338901,45769873,45773064,4338896,201254,4152858,4099214,443412,201826,4099651,4193704,45770902) 
-            AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+            AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
             THEN 1 
             ELSE 0 
         END
@@ -121,7 +121,7 @@ comor_nonearlypvi <- dbGetQuery(conn, "SELECT
     MAX(
         CASE 
             WHEN a.condition_concept_id IN (44782429,320128,4110948,44784621,439696,319034,444101,443919,443771,317895,319826) 
-            AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+            AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
             THEN 1 ELSE 0 
         END
     ) AS hypertension,
@@ -129,10 +129,10 @@ comor_nonearlypvi <- dbGetQuery(conn, "SELECT
         CASE 
             WHEN (
                 (o.observation_concept_id IN (4005823, 4276526, 4218741) 
-                 AND o.observation_date < b.cohort_start_date - INTERVAL 365 DAY)
+                 AND o.observation_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
                 OR
                 (a.condition_concept_id IN (4103418, 4146763, 4233811, 4209423 ) 
-                 AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY)
+                 AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
             ) THEN 1 ELSE 0 
         END
     ) AS smoking,
@@ -141,38 +141,38 @@ comor_nonearlypvi <- dbGetQuery(conn, "SELECT
             WHEN (
                 (a.condition_concept_id IN (46271022, 44782429, 43531578, 443597, 45763854, 45763855, 
                                             443612, 443611, 4019967, 193782, 443919, 192359, 201826) 
-                 AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY)
+                 AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
                 OR
                 (o.observation_concept_id = 4019967 
-                 AND o.observation_date < b.cohort_start_date - INTERVAL 365 DAY)
+                 AND o.observation_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date)
             ) THEN 1 ELSE 0 
         END
     ) AS eskd,
     MAX(
         CASE 
             WHEN a.condition_concept_id IN (256451, 255841, 255841, 261325, 255573, 256449)
-            AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+            AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
             THEN 1 ELSE 0 
         END
     ) AS copd,
     MAX(
         CASE 
             WHEN a.condition_concept_id IN (443614, 443601, 443597, 45763854, 45763855, 443612, 443611, 443611, 44782429, 201826, 43531578, 4140207)
-            AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+            AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
             THEN 1 ELSE 0 
         END
     ) AS chronic_kidney_disease,
     MAX(
         CASE 
             WHEN a.condition_concept_id IN (321318, 312327, 4108217, 4176969, 315286)
-            AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+            AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
             THEN 1 ELSE 0 
         END
     ) AS ischemic_heart_disease,
     MAX(
         CASE 
             WHEN a.condition_concept_id IN (316139)
-            AND a.condition_start_date < b.cohort_start_date - INTERVAL 365 DAY 
+            AND a.condition_start_date BETWEEN (b.cohort_start_date - INTERVAL 365 DAY) AND b.cohort_start_date
             THEN 1 ELSE 0 
         END
     ) AS congestive_heart_failure
@@ -325,3 +325,4 @@ table1_df
 
 # Save directly as CSV using moonBook's built-in function 
 mycsv(table1_df, file = "LVC_table1.csv")
+
